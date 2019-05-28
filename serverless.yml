@@ -20,28 +20,21 @@ service: aws-nodejs # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs10.x
-
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
-
-# you can add statements to the Lambda function's IAM Role here
-iamRoleStatements:
-  - Effect: "Allow"
-    Action:
-      - dynamodb:DescribeTable
-      - dynamodb:Query
-      - dynamodb:Scan
-      - dynamodb:GetItem
-      - dynamodb:PutItem
-      - dynamodb:UpdateItem
-      - dynamodb:DeleteItem
-    Resource:
-      Fn::Join:
-        - ""
-        - - "arn:aws:dynamodb:*:*:table/"
-          - Ref: ProductsGqlDynamoDbTable
-
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:dynamodb:*:*:table/"
+             - Ref: ProductsGqlDynamoDbTable
 functions:
   queryProducts:
     handler: handler.queryProducts
